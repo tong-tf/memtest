@@ -330,6 +330,8 @@ int do_test(int argc, char **argv, stage_callback callback) {
 
     for(loop=1; ((!loops) || loop <= loops); loop++) {
         LOGI("Loop %lu", loop);
+        sprintf(buff, "Loop %d times\n", loop);
+        callback(buff);
         if (loops) {
             printf("/%lu", loops);
         }
@@ -339,8 +341,7 @@ int do_test(int argc, char **argv, stage_callback callback) {
             exit_code |= EXIT_FAIL_ADDRESSLINES;
         }
         LOGI("  %-20s: %s", "Stuck Address", rv_item == 0 ? "OK": "FAIL");
-        for (i=0;;i++) {
-            if (!tests[i].name) break;
+        for (i=0;tests[i].name;i++) {
             /* If using a custom testmask, only run this test if the
                bit corresponding to this test was set by the user.
              */

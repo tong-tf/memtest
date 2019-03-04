@@ -107,7 +107,11 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case MSG_TEST_UPDATE:
                     String obj = (String) msg.obj;
-                    testResult.setText(testResult.getText().toString() + "\n" + obj);
+                    if(obj.startsWith("Loop")){  // a new test begin, clear previous result.
+                        testResult.setText(String.format(getResources().getString(R.string.test_result), obj));
+                    }else{
+                        testResult.setText(testResult.getText().toString() + "\n" + obj);
+                    }
                     break;
             }
         }
