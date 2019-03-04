@@ -1,5 +1,7 @@
 package com.mid.memtest;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 
 import java.nio.Buffer;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -38,8 +41,11 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.test_mem)
     Button testMem;
 
+
     private HandlerThread mMemTestThread;
     private MemTestHandler memTestHandler;
+
+    SharedPreferences mSp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -48,6 +54,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         startMemTest();
+        mSp = getPreferences(Context.MODE_PRIVATE);
+        memCount.setText(mSp.getString("count", "10"));
+        memSize.setText(mSp.getString("size", "64M"));
+
     }
 
 
@@ -68,6 +78,10 @@ public class MainActivity extends AppCompatActivity {
                 Bundle data = new Bundle();
                 data.putString("size", size);
                 data.putString("count", count);
+                SharedPreferences.Editor editor = mSp.edit();
+                editor.putString("size", size);
+                editor.putString("count",count);
+                editor.commit();
                 Log.i(TAG, String.format("Test condition: %s, %s", size, count));
                 memTestHandler.sendMessage(memTestHandler.obtainMessage(MSG_TEST_START, data));
                 view.setEnabled(false);

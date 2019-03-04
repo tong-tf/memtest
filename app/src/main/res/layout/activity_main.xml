@@ -26,7 +26,7 @@
         android:layout_marginEnd="59dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="128M"
+        android:text="@string/default_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="1"
+        android:text="@string/default_count"
         app:layout_constraintStart_toStartOf="@+id/mem_size"
         app:layout_constraintTop_toBottomOf="@+id/mem_size" />
 
