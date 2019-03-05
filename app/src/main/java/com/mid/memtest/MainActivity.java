@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON );
         setUp();
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
@@ -57,12 +59,12 @@ public class MainActivity extends AppCompatActivity {
         mSp = getPreferences(Context.MODE_PRIVATE);
         memCount.setText(mSp.getString("count", "10"));
         memSize.setText(mSp.getString("size", "64M"));
-
     }
 
 
     private void startMemTest(){
         mMemTestThread = new HandlerThread("Memory Test");
+        mMemTestThread.setPriority(Thread.MAX_PRIORITY);
         mMemTestThread.start();
         memTestHandler = new MemTestHandler(mMemTestThread.getLooper(), h);
 
